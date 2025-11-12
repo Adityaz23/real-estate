@@ -1,9 +1,8 @@
 import { SplashScreen, Stack } from "expo-router";
 import "./globals.css";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
-import GloablProvider from "@/lib/globalProvider";
-
+import React, { useEffect } from "react";
+import { GlobalProvider } from "@/lib/globalProvider";
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     "Rubik-Bold": require("../assets/fonts/Rubik-Bold.ttf"),
@@ -20,8 +19,8 @@ export default function RootLayout() {
   }, [fontsLoaded]);
   if (!fontsLoaded) return null;
   return (
-    <GloablProvider>
+    <GlobalProvider>
       <Stack screenOptions={{ headerShown: false }}></Stack>
-    </GloablProvider>
+    </GlobalProvider>
   );
 }

@@ -10,6 +10,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
+      {/* // Now we are going to implement the tabs and the navigation of our app. */}
       <Text className="font-bold my-10 font-rubik text-3xl">Welcome to Dorium</Text>
       <Link href="/sign-in">Sign-In</Link>
       <Link href="/explore">Explore</Link>

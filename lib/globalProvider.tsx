@@ -1,6 +1,4 @@
-import { createContext, useContext } from "react";
-import { ReactNode } from "react";
-
+import { createContext, useContext, ReactNode } from "react";
 import { getUser } from "./appwrite";
 import { useAppwrite } from "./useAppwrite";
 
@@ -11,25 +9,19 @@ interface User {
   avatar: string;
 }
 
-interface GloablContextType {
+interface GlobalContextType {
   isLoggedIn: boolean;
   user: User | null;
   loading: boolean;
   refetch: (newParams?: Record<string, string | number>) => Promise<void>;
 }
 
-const GlobalContext = createContext<GloablContextType | undefined>(undefined);
+const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
-export const GloablProvider = ({ children }: { children: ReactNode }) => {
-  const {
-    data: user,
-    loading,
-    refetch,
-  } = useAppwrite({
-    fn: getUser,
-  });
+export const GlobalProvider = ({ children }: { children: ReactNode }) => {
+  const { data: user, loading, refetch } = useAppwrite({ fn: getUser });
   const isLoggedIn = !!user;
-  console.log(JSON.stringify(user, null, 2));
+
   return (
     <GlobalContext.Provider value={{ isLoggedIn, loading, refetch, user }}>
       {children}
@@ -37,12 +29,10 @@ export const GloablProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const userGlobalContext = (): GloablContextType => {
+export const useGlobalContext = (): GlobalContextType => {
   const context = useContext(GlobalContext);
   if (!context) {
-    throw new Error("useGlobalContext must be used with in a GloablProvider.");
+    throw new Error("useGlobalContext must be used within a GlobalProvider.");
   }
   return context;
 };
-
-export default GloablProvider;
