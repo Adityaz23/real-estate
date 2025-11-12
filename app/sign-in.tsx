@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -10,9 +11,24 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
+import { login } from "@/lib/appwrite";
+import { userGlobalContext } from "@/lib/globalProvider";
+import { Redirect } from "expo-router";
 
 export default function SignIn() {
-  const handleLogin = () => {};
+  const SignIn = () =>{
+    const {refetch,loading,isLoggedIn} = userGlobalContext();
+    if(!loading && !isLoggedIn) return <Redirect href="/"/>
+  }
+  const handleLogin = async () => {
+
+    const result = await login();
+    if (result) {
+      refetch();
+    } else {
+      Alert.alert("Error", "Failed to login!");
+    }
+  };
   return (
     <View>
       <SafeAreaView className="bg-white h-full">
@@ -35,11 +51,17 @@ export default function SignIn() {
             </Text>
             <TouchableOpacity
               onPress={handleLogin}
-              className="bg-white shadow-zinc-300 shadow-md rounded-full w-full py-4 mt-5"
+              className="bg-pink-100 shadow-black-300 shadow-lg rounded-full w-full py-4 mt-5"
             >
               <View className="flex flex-row items-center justify-center">
-              <Image source={icons.google} className="h-5 w-5 ml-2" resizeMode="contain"/>
-              <Text className="text-lg text-center font-rubik-medium ml-2 text-rose-400">Continue with google</Text>
+                <Image
+                  source={icons.google}
+                  className="h-5 w-5 ml-2"
+                  resizeMode="contain"
+                />
+                <Text className="text-lg text-center font-rubik-medium ml-2 text-rose-400">
+                  Continue with google
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
