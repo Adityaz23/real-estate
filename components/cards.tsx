@@ -10,18 +10,38 @@ export const Featured = ({onPress}: Props) => {
     <TouchableOpacity onPress={onPress} className='flex flex-col items-start w-60 h-80 relative'>
         <Image source={images.japan} className='size-full rounded-2xl'/>
         <Image source={images.cardGradient} className='size-full rounded-2xl absolute bottom-1'/>
-        <View>
+        <View className='flex flex-row items-center bg-white right-5 px-3 py-1.5 rounded-full absolute mt-5'>
             <Image source={icons.star} className='size-3.5'/>
+            <Text className='text-xs font-rubik-bold text-zinc-700 ml-1'>4.5</Text>
+        </View>
+        <View className='flex flex-col absolute bottom-5 items-start inset-x-5'>
+          <Text className='text-xl font-rubik-extrabold text-white' numberOfLines={1}>Modern Apartment</Text>
+          <Text className='text-sm text-white font-rubik-bold' numberOfLines={1}>2 W 32th street, New York</Text>
+          <View className='flex flex-row items-center justify-between w-full'>
+            <Text className='text-xl font-rubik-extrabold text-white'>$2,499</Text>
+            <Image source={icons.heart} className='size-5'/>
+          </View>
         </View>
     </TouchableOpacity>
   )
 }
 
-export const Regular = () =>{
+export const Regular = ({onPress}: Props) =>{
     return (
-        <View>
-          <Text>Regular</Text>
+        <TouchableOpacity onPress={onPress} className='flex-1 w-full mt-4 px-3 py-4 rounded-lg bg-white shadow-lg shadow-black-100/70 relative'>
+          <View className='flex flex-row items-center absolute px-2 top-5 right-5 bg-white/90 p-1 rounded-full z-50'>
+            <Image source={icons.star} className='size-2.5'/>
+            <Text className='text-xs font-rubik-bold text-zinc-700 ml-0.5'>4.5</Text>
         </View>
+        <View className='flex flex-col absolute bottom-5 items-start inset-x-5'>
+          <Text className='text-xl font-rubik-extrabold text-orange-500' numberOfLines={1}>Modern Apartment</Text>
+          <Text className='text-sm text-white font-rubik-bold' numberOfLines={1}>2 W 32th street, New York</Text>
+          <View className='flex flex-row items-center justify-between w-full'>
+            <Text className='text-xl font-rubik-extrabold text-white'>$2,499</Text>
+            <Image source={icons.heart} className='size-5'/>
+          </View>
+        </View>
+        </TouchableOpacity>
       )
 }
 

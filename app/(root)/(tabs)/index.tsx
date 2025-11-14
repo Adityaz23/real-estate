@@ -35,10 +35,10 @@ export default function Index() {
           </TouchableOpacity>
         </View>
       </View>
-      </View>
-      {/* Implementing the cards from the components from the components/cards.tsx */}
       <Featured />
       <Regular/>
+      </View>
+      {/* Implementing the cards from the components from the components/cards.tsx */}
     </SafeAreaView>
   );
 }
