@@ -3,7 +3,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import SearchProperty from "@/components/search";
-import { Featured,Regular } from "@/components/cards";
+import { Featured, Regular } from "@/components/cards";
+import Filters from "@/components/filters";
 export default function Index() {
   return (
     <SafeAreaView className="bg-white h-full">
@@ -23,20 +24,40 @@ export default function Index() {
           </View>
           <Image source={icons.bell} className="size-6 mr-1" />
         </View>
-      {/* // Search parameters for the apartments */}
-      <SearchProperty />
-      <View className="my-5">
+        {/* // Search parameters for the apartments */}
+        <SearchProperty />
+        <View className="my-5">
+          <View className="flex flex-row items-center justify-between ">
+            <Text className="text-xl font-rubik-bold text-black ">
+              Featured!
+            </Text>
+            <TouchableOpacity>
+              <Text className="text-base font-rubik-bold text-zinc-700">
+                See All
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View className="flex flex-row gap-5 mt-5">
+            <Featured />
+            <Featured />
+            <Featured />
+          </View>
+        </View>
         <View className="flex flex-row items-center justify-between ">
-          <Text className="text-xl font-rubik-bold text-black ">Featured!</Text>
+          <Text className="text-xl font-rubik-bold text-black ">
+            Our Recommendation!
+          </Text>
           <TouchableOpacity>
             <Text className="text-base font-rubik-bold text-zinc-700">
               See All
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
-      <Featured />
-      <Regular/>
+        <Filters />
+        <View className="flex flex-row gap-5 mt-5">
+          <Regular />
+          <Regular />
+        </View>
       </View>
       {/* Implementing the cards from the components from the components/cards.tsx */}
     </SafeAreaView>

@@ -33,12 +33,13 @@ export const Regular = ({onPress}: Props) =>{
             <Image source={icons.star} className='size-2.5'/>
             <Text className='text-xs font-rubik-bold text-zinc-700 ml-0.5'>4.5</Text>
         </View>
-        <View className='flex flex-col absolute bottom-5 items-start inset-x-5'>
-          <Text className='text-xl font-rubik-extrabold text-orange-500' numberOfLines={1}>Modern Apartment</Text>
-          <Text className='text-sm text-white font-rubik-bold' numberOfLines={1}>2 W 32th street, New York</Text>
-          <View className='flex flex-row items-center justify-between w-full'>
-            <Text className='text-xl font-rubik-extrabold text-white'>$2,499</Text>
-            <Image source={icons.heart} className='size-5'/>
+        <Image source={images.newYork} className='w-full h-40 rounded-lg'/>
+        <View className='flex flex-col mt-2'>
+          <Text className='text-base font-rubik-bold text-black'>Cozy Studio</Text>
+          <Text className='text-xs text-black font-rubik' numberOfLines={1}>2 W 32th street, New York</Text>
+          <View className='flex flex-row items-center justify-between mt-2'>
+            <Text className='text-base font-rubik-bold text-black'>$2,499</Text>
+            <Image source={icons.heart} className='w-5 h-5 mr-2' tintColor="#191d31"/>
           </View>
         </View>
         </TouchableOpacity>
