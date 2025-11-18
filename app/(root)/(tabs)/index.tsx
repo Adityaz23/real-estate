@@ -1,65 +1,95 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import SearchProperty from "@/components/search";
 import { Featured, Regular } from "@/components/cards";
 import Filters from "@/components/filters";
+import { useGlobalContext } from "@/lib/globalProvider";
 export default function Index() {
+  const { user } = useGlobalContext();
+  const greeting = getGreeting();
   return (
     <SafeAreaView className="bg-white h-full">
-      <View className="px-5">
-        <View className="flex flex-row items-center justify-between mt-5">
-          <View className="flex flex-row">
-            {/* will replace the images.avatar with the appwrite data functionality. */}
-            <Image source={images.avatar} className="rounded-full size-12" />
-            <View className="flex flex-col items-start justify-center ml-2">
-              <Text className="text-xs font-rubik text-black-100">
-                Hi, Good Morning!
-              </Text>
-              <Text className="text-base font-rubik-medium text-black-300">
-                Aditya
-              </Text>
+      {/* // Now we are going to use the flatlist for the scrolling of the item in our home screen. */}
+      <FlatList
+        data={[1, 2, 3, 4]}
+        renderItem={({ item }) => <Regular />}
+        keyExtractor={(item) => item.toString()}
+        numColumns={2}
+        contentContainerClassName="pb-32"
+        columnWrapperClassName="flex gap-5 px-5"
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View className="px-5">
+            <View className="flex flex-row items-center justify-between mt-5">
+              <View className="flex flex-row">
+                {/* will replace the images.avatar with the appwrite data functionality. */}
+                <Image
+                  source={{ uri: user?.avatar }}
+                  className="rounded-full size-12"
+                />
+                <View className="flex flex-col items-start justify-center ml-2">
+                  <Text className="text-xs font-rubik-bold text-rose-400">
+                    Hi,{greeting}!
+                  </Text>
+                  <Text className="text-base font-rubik-medium text-fuchsia-500">
+                    {user?.name}
+                  </Text>
+                </View>
+              </View>
+              <Image source={icons.bell} className="size-6 mr-1" />
             </View>
-          </View>
-          <Image source={icons.bell} className="size-6 mr-1" />
-        </View>
-        {/* // Search parameters for the apartments */}
-        <SearchProperty />
-        <View className="my-5">
-          <View className="flex flex-row items-center justify-between ">
-            <Text className="text-xl font-rubik-bold text-black ">
-              Featured!
-            </Text>
-            <TouchableOpacity>
-              <Text className="text-base font-rubik-bold text-zinc-700">
-                See All
+            {/* // Search parameters for the apartments */}
+            <SearchProperty />
+            <View className="my-5">
+              <View className="flex flex-row items-center justify-between ">
+                <Text className="text-xl font-rubik-bold text-black ">
+                  Featured!
+                </Text>
+                <TouchableOpacity>
+                  <Text className="text-base font-rubik-bold text-zinc-700">
+                    See All
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <FlatList
+                data={[1, 2, 3]}
+                renderItem={({ item }) => <Featured />}
+                keyExtractor={(item) => item.toString()}
+                horizontal
+                contentContainerClassName="gap-3 flex mt-5"
+                bounces={false}
+                showsHorizontalScrollIndicator={false}
+              />
+              <View className="flex flex-row gap-5 mt-5"></View>
+            </View>
+            <View className="flex flex-row items-center justify-between ">
+              <Text className="text-xl font-rubik-bold text-black ">
+                Our Recommendation!
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity>
+                <Text className="text-base font-rubik-bold text-zinc-700">
+                  See All
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <Filters />
+            <View className="flex flex-row gap-5 mt-5"></View>
           </View>
-          <View className="flex flex-row gap-5 mt-5">
-            <Featured />
-            <Featured />
-            <Featured />
-          </View>
-        </View>
-        <View className="flex flex-row items-center justify-between ">
-          <Text className="text-xl font-rubik-bold text-black ">
-            Our Recommendation!
-          </Text>
-          <TouchableOpacity>
-            <Text className="text-base font-rubik-bold text-zinc-700">
-              See All
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <Filters />
-        <View className="flex flex-row gap-5 mt-5">
-          <Regular />
-          <Regular />
-        </View>
-      </View>
+        }
+      />
+
       {/* Implementing the cards from the components from the components/cards.tsx */}
     </SafeAreaView>
   );
 }
+
+const getGreeting = () => {
+  const hour = new Date().getHours();
+
+  if (hour >= 5 && hour < 12) return "Good Morning";
+  if (hour >= 12 && hour < 17) return "Good Afternoon";
+  if (hour >= 17 && hour < 21) return "Good Evening";
+  return "Good Night";
+};
