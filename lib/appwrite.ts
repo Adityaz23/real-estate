@@ -21,6 +21,7 @@ client
 
 export const avatar = new Avatars(client);
 export const account = new Account(client);
+// Below we are just passing the appwrite functionality.
 export const databases = new Databases(client);
 // login function ->
 export async function login() {
