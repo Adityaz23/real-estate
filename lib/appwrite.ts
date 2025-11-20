@@ -1,4 +1,4 @@
-import { Account, Avatars, Client, OAuthProvider } from "react-native-appwrite";
+import { Account, Avatars, Client, Databases, OAuthProvider } from "react-native-appwrite";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 
@@ -6,6 +6,11 @@ export const config = {
   platform: "com.aditya.dorium",
   endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
   projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
+  databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
+  gallariesId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_GALLERY!,
+  reviewId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_REVIEW!,
+  propertiesId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_PROPERTIES!,
+  agentsId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_ID!
 };
 
 export const client = new Client();
@@ -16,7 +21,8 @@ client
 
 export const avatar = new Avatars(client);
 export const account = new Account(client);
-
+// Below we are just passing the appwrite functionality.
+export const databases = new Databases(client);
 // login function ->
 export async function login() {
   try {
