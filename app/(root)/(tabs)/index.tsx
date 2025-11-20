@@ -1,4 +1,4 @@
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import { Button, FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
@@ -6,12 +6,14 @@ import SearchProperty from "@/components/search";
 import { Featured, Regular } from "@/components/cards";
 import Filters from "@/components/filters";
 import { useGlobalContext } from "@/lib/globalProvider";
+import seed from "@/lib/seed";
 export default function Index() {
   const { user } = useGlobalContext();
   const greeting = getGreeting();
   return (
     <SafeAreaView className="bg-white h-full">
       {/* // Now we are going to use the flatlist for the scrolling of the item in our home screen. */}
+      <Button title="seed" onPress={seed}></Button>
       <FlatList
         data={[1, 2, 3, 4]}
         renderItem={({ item }) => <Regular />}
