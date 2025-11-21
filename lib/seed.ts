@@ -107,7 +107,6 @@ async function seed() {
       reviews.push(review);
     }
     console.log(`Seeded ${reviews.length} reviews.`);
-    console.log("Gallery images:", galleryImages);
 
     // Seed Galleries
     const galleries = [];
