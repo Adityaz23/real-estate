@@ -139,6 +139,12 @@ export async function getPRoperties({
       );
     }
     if (limit) buildQuery.push(Query.limit(limit));
+    const result = await databases.listDocuments(
+      config.databaseId!,
+      config.propertiesId!,
+      buildQuery
+    );
+    return result.documents;
   } catch (error) {
     console.error(error);
     return [];
