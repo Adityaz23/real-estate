@@ -13,7 +13,6 @@ export default function Index() {
   return (
     <SafeAreaView className="bg-white h-full">
       {/* // Now we are going to use the flatlist for the scrolling of the item in our home screen. */}
-      <Button title="seed" onPress={seed}></Button>
       <FlatList
         data={[1, 2, 3, 4]}
         renderItem={({ item }) => <Regular />}

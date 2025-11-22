@@ -1,4 +1,11 @@
-import { Account, Avatars, Client, Databases, OAuthProvider } from "react-native-appwrite";
+import {
+  Account,
+  Avatars,
+  Client,
+  Databases,
+  OAuthProvider,
+  Query,
+} from "react-native-appwrite";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 
@@ -10,7 +17,7 @@ export const config = {
   gallariesId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_GALLERY!,
   reviewId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_REVIEW!,
   propertiesId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_PROPERTIES!,
-  agentsId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_ID!
+  agentsId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_ID!,
 };
 
 export const client = new Client();
@@ -82,11 +89,58 @@ export async function getUser() {
       const userAvatar = avatar.getInitials(response.name);
       return {
         ...response,
-        avatar: userAvatar.toString(),  
-    };
+        avatar: userAvatar.toString(),
+      };
     }
   } catch (error) {
     console.error(error);
     return null;
+  }
+}
+
+// getting all the properties of our getting lates properties ->
+export async function getLatestProperties() {
+  try {
+    const results = await databases.listDocuments(
+      config.databaseId!,
+      config.propertiesId!,
+      [Query.orderAsc("$createdAt"), Query.limit(5)]
+    );
+    return results.documents;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+// this is for getting the all properties ->
+export async function getPRoperties({
+  filter,
+  query,
+  limit,
+}: {
+  filter: string;
+  query: string;
+  limit?: number;
+}) {
+  try {
+    // created the all search query for the user to be able to search the properties by there types ->
+    const buildQuery = [Query.orderDesc("$createdAt")];
+    if (filter && filter !== "All") {
+      buildQuery.push(Query.equal("type", filter));
+    }
+    if (query) {
+      buildQuery.push(
+        Query.or([
+          Query.search("name", query),
+          Query.search("address", query),
+          Query.search("types", query),
+        ])
+      );
+    }
+    if (limit) buildQuery.push(Query.limit(limit));
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 }
