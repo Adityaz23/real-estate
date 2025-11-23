@@ -114,7 +114,7 @@ export async function getLatestProperties() {
 }
 
 // this is for getting the all properties ->
-export async function getPRoperties({
+export async function getProperties({
   filter,
   query,
   limit,
