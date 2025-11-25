@@ -7,7 +7,7 @@ interface Props {
   item: Models.Document
   onPress?: () => void;
 }
-export const Featured = ({ item: {image, rating, name, address, price}, onPress }: Props) => {
+export const Featured = ({ item: {Image:image, rating, name, address, price}, onPress }: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -43,7 +43,7 @@ export const Featured = ({ item: {image, rating, name, address, price}, onPress 
   );
 };
 
-export const Regular = ({ item: {image, rating, name, address, price}, onPress }: Props) => {
+export const Regular = ({ item: {Image:image, rating, name, address, price}, onPress }: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}

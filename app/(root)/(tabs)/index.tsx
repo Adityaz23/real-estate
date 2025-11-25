@@ -1,4 +1,11 @@
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import icons from "@/constants/icons";
 import SearchProperty from "@/components/search";
@@ -9,6 +16,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getLatestProperties, getProperties } from "@/lib/appwrite";
 import { useEffect } from "react";
+import Noresults from "@/components/Noresults";
 export default function Index() {
   const { user } = useGlobalContext();
   const params = useLocalSearchParams<{ query?: string; filter?: string }>();
@@ -58,6 +66,13 @@ export default function Index() {
         contentContainerClassName="pb-32"
         columnWrapperClassName="flex gap-5 px-5"
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          loading ? (
+            <ActivityIndicator size="large" className="text-white mt-5" />
+          ) : (
+            <Noresults />
+          )
+        }
         ListHeaderComponent={
           <View className="px-5">
             <View className="flex flex-row items-center justify-between mt-5">
@@ -91,17 +106,24 @@ export default function Index() {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <FlatList
-                data={latestProperties}
-                renderItem={({ item }) => (
-                  <Featured item={item} onPress={() => handleCardPress} />
-                )}
-                keyExtractor={(item) => item.$id}
-                horizontal
-                contentContainerClassName="gap-3 flex mt-5"
-                bounces={false}
-                showsHorizontalScrollIndicator={false}
-              />
+              {/* hiding the featured tab if there are no results for the filter. */}
+              {latestLoadingProperties ? (
+                <ActivityIndicator size="large" className="text-black" />
+              ) : !latestProperties || latestProperties.length === 0 ? (
+                <Noresults />
+              ) : (
+                <FlatList
+                  data={latestProperties}
+                  renderItem={({ item }) => (
+                    <Featured item={item} onPress={() => handleCardPress} />
+                  )}
+                  keyExtractor={(item) => item.$id}
+                  horizontal
+                  contentContainerClassName="gap-3 flex mt-5"
+                  bounces={false}
+                  showsHorizontalScrollIndicator={false}
+                />
+              )}
               <View className="flex flex-row gap-5 mt-5"></View>
             </View>
             <View className="flex flex-row items-center justify-between ">

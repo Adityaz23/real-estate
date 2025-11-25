@@ -124,11 +124,12 @@ export async function getProperties({
   limit?: number;
 }) {
   try {
-    // created the all search query for the user to be able to search the properties by there types ->
     const buildQuery = [Query.orderDesc("$createdAt")];
+
     if (filter && filter !== "All") {
       buildQuery.push(Query.equal("type", filter));
     }
+
     if (query) {
       buildQuery.push(
         Query.or([
@@ -138,13 +139,24 @@ export async function getProperties({
         ])
       );
     }
+
     if (limit) buildQuery.push(Query.limit(limit));
+
     const result = await databases.listDocuments(
       config.databaseId!,
       config.propertiesId!,
       buildQuery
     );
-    return result.documents;
+
+    // ⭐ Convert file IDs to actual URLs
+    const documents = result.documents.map((doc: any) => ({
+      ...doc,
+      image: doc.image?.length
+        ? `${config.endpoint}/storage/buckets/${config.propertiesId}/files/${doc.image[0]}/view?project=${config.projectId}`
+        : null,
+    }));
+
+    return documents;
   } catch (error) {
     console.error(error);
     return [];
