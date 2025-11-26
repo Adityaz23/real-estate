@@ -162,3 +162,18 @@ export async function getProperties({
     return [];
   }
 }
+
+// getting the properties with the id ->
+export async function getPropertiesById({ id }: { id: string }) {
+  try {
+    const result = await databases.getDocument(
+      config.databaseId!,
+      config.propertiesId!,
+      id
+    );
+    return result;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
